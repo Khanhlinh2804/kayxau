@@ -1,0 +1,32 @@
+.icon-add{
+    font-size: 25px;
+}
+.icon-delete{
+    font-size: 20px;
+}
+.button-icon-delete{
+    border: none;
+    border-radius: none;
+    background-color: white;
+    color: red;
+}
+.search label button{
+    border: none;
+    border-radius: none;
+    background-color: white;
+}
+.button-icon-update{
+    color: green;
+}
+
+.bin-outline{
+    font-size: 20px;
+    color: red;
+}
+.line{
+    border: 1px solid rgb(197, 197, 197);
+}
+.form-group label{
+    padding-top: 15px;
+}
+
