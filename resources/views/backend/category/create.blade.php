@@ -11,6 +11,13 @@
                     <p class="text-danger">{{ $messages }}</p>
                 @enderror
             </div>
+            <div class="form-group" style="padding-top: 10px">
+                <label for="exampleInputEmail1">Name</label>
+                <input type="file" name="image" class="form-control" placeholder="Name's Category">
+                @error('image')
+                    <p class="text-danger">{{ $messages }}</p>
+                @enderror
+            </div>
             <h1></h1>
             <div class="form-group">
                 <label for="" style="padding-top: 10px">Status</label>

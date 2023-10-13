@@ -44,6 +44,7 @@
                 <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
+                <th scope="col">Image</th>
                 <th scope="col">Status</th>
                 <th scope="col">Active</th>
                 </tr>
@@ -53,6 +54,10 @@
                     <tr>
                         <th scope="row">{{$loop->iteration}}</th>
                         <td>{{$item->name}}</td>
+                        <td>
+                            <img src="{{url('uploads')}}/{{$item->image}}" style="width: 120px;
+                                height: 150px;" alt="">
+                        </td>
                         <td>{{$item->status}}</td>
                         <td>
                             <form action="{{route('category.destroy',$item->id)}}" method="post">

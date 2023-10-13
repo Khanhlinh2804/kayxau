@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\View;
+use App\Http\Requests\Product\ProductRequest;
 use App\Models\Product;
 use App\Models\Category;
 
@@ -14,8 +16,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $linh = Product::with('category')->where('status','Active');
-        // dd($linh);
         $product =  Product::with('category')->orderByDesc('name','desc')->search()->paginate(10);
         return view('backend.product.list', compact('product'));
     }
@@ -34,39 +34,32 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $rules = [
-        //     'name' => 'required|unique:posts|max:255|min:5',
-        //     'images' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'price' => 'required',
-        //     'sale_price' => 'required',
-        //     'quatity' => 'required|numeric',
-        // ]; 
-        // $messages = [
-        //     'name.required'=>'Product name cannot be empty',
-        //     'name.min' => 'Category name must be at least 5 characters',
-        //     'name.max' => 'Category name cannot exceed 255 characters',
-        //     'price.required'=> 'The price cannot be empty',
-        //     'images.required'=> 'The image cannot be empty',
-        //     'images.mimes'=> 'The image is not in the correct format',
-        //     'quantity.required' => 'Product quantity cannot be empty',
-        //     'quantuty.numeric' => 'Quantity must be entered as a number'
-        // ];
-        // $request->validated($rules,$messages);
-        $file_name = time() . $request->images->getClientOriginalName();
-        $request->images->move(public_path('uploads'),$file_name);
-        Product::create([
-            'name'=> $request->name,
-            'images' => $file_name,
-            'price' =>$request->price,
-            'sale_price' =>$request->sale_price,
-            'status' => $request->status,
-            'quatity' =>$request->quatity,
-            'color' =>$request->color,
-            'description'=> $request->description,
-            'summary' => $request->summary,
-            'category_id'=> $request->category_id,
+        $request->validate([
+            'name' => 'required|unique:products|max:255|min:5',
+            'images' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
+            'color' => 'required',
+            'description' => 'required',
+            'summary' => 'required|max:200'
         ]);
-        return redirect()->route('product.index')->with('success','Create Product Successfully');
+        $file_name = time() . $request->file('images')->getClientOriginalName();
+        $request->file('images')->move(public_path('uploads'), $file_name);
+
+        Product::create([
+            'name' => $request->name,
+            'images' => $file_name,
+            'price' => $request->price,
+            'sale_price' => $request->sale_price,
+            'status' => $request->status,
+            'quatity' => $request->quatity,
+            'color' => $request->color,
+            'description' => $request->description,
+            'summary' => $request->summary,
+            'category_id' => $request->category_id,
+        ]);
+
+        return redirect()->route('product.index')->with('success', 'Create Product Successfully');
     }
 
     /**
@@ -74,7 +67,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -83,7 +76,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::find($id);
-        $category= Category::all(); //chỉ lấy mỗi name trong bảng category
+        $category= Category::pluck('name', 'id');; //chỉ lấy mỗi name trong bảng category
         return view('backend.product.update', compact('product','category'));
     }
 

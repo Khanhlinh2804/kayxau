@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Product;
+
 
 class DashboardController extends Controller
 {
@@ -11,11 +14,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('backend.dashboard.index');
+        $user = User::orderBy('id', 'DESC')->limit(8)->get();
+        $totalproduct = Product::count();
+        return view('backend.dashboard.index',compact('user','totalproduct'));
     }
-    public function sesion() {
-        return view ('sesion');
-    }
+    
     /**
      * Show the form for creating a new resource.
      */

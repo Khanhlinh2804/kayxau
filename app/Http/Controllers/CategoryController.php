@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -28,8 +29,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:products|max:255|min:5',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $file_name = time() . $request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path('uploads'), $file_name);
         try {
-            Category::create($request->all());
+            Category::create([
+                'name' => $request->name,
+                'image' => $file_name,
+                'status' => $request->status
+            ]);
             return redirect()->route('category.index')->with('success', 'Create success');
         } catch (\Exception $e) {
             return redirect()->route('category.index')->with('error', 'Create unsuccessfully ' );
@@ -58,15 +69,21 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $category = Category::find($id);
-        if($category){
-            $form_data = $request->all('name','status');
-            $category->update([
-                'name'=>$request->name,
-                'status'=>($request->status == 'Active' ? 'Active' : 'No Active'),
-            ]);
-            return redirect()->route('category.index')->with('success','Update Category Successfuly');
+        $rules = ([
+            'name' => 'required|max:255|min:5', 
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        $request->validate($rules);
+        if($request->has('image')){
+            $file_name = time() .$request->image->getClientOriginalName();
+            $request->image->move(public_path('uploads'), $file_name);
         }
-        return redirect()->route('category.index')->with('error','Update Category Unsuccessfuly ');
+        $category->update([
+            'name'=>$request->name,
+            'image' => $file_name,
+            'status'=>($request->status == 'Active' ? 'Active' : 'No Active'),
+        ]);
+        return redirect()->route('category.index')->with('success','Update Category Successfuly');
     }
 
     /**

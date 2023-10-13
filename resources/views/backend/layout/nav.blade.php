@@ -10,5 +10,5 @@
             <img src="{{url('')}}/assets/imgs/customer01.jpg" alt="">
         </div>
     </div>
-    <div class="line"></div>
+    <hr>
 </div>

@@ -23,10 +23,12 @@
     font-size: 20px;
     color: red;
 }
-.line{
-    border: 1px solid rgb(197, 197, 197);
-}
 .form-group label{
     padding-top: 15px;
+}
+.summary:focus {
+    background-color: #f4f4f4;
+    color: #333;
+    outline: none;
 }
 

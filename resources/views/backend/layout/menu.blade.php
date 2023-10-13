@@ -1,4 +1,4 @@
-<div class="navigation background-menu">
+<div class="navigation background-menu" style="overflow: auto;">
                 <ul>
                     <li>
                         <a href="{{route('dashboard')}}">
@@ -8,7 +8,7 @@
                             </span>
                         </a>
                     </li>
-    
+
                     <li>
                         <a href="{{route('dashboard')}}">
                             <span class="icon" >
@@ -36,11 +36,43 @@
                     </li>
     
                     <li>
-                        <a href="#">
+                        <a href="{{route('user.index')}}">
                             <span class="icon" >
-                                <ion-icon name="chatbubble-outline"></ion-icon>
+                                <ion-icon name="people-outline"></ion-icon>
                             </span>
-                            <span class="title">Messages</span>
+                            <span class="title">User</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('skill.index')}}">
+                            <span class="icon" >
+                                <ion-icon name="sparkles-outline"></ion-icon>
+                            </span>
+                            <span class="title">Skill</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('blog.index')}}">
+                            <span class="icon" >
+                                <ion-icon name="newspaper-outline"></ion-icon>
+                            </span>
+                            <span class="title">Blog</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('contact.index')}}">
+                            <span class="icon" >
+                                <ion-icon name="call-outline"></ion-icon>
+                            </span>
+                            <span class="title">Contact</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('comment.index')}}">
+                            <span class="icon" >
+                                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+                            </span>
+                            <span class="title">Comment</span>
                         </a>
                     </li>
     
@@ -80,4 +112,4 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+    </div>

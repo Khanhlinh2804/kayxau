@@ -11,14 +11,14 @@
                         <label for="exampleInputEmail1">Name</label>
                         <input type="text" name="name" class="form-control" placeholder="Name's product">
                         @error('name')
-                            <p class="text-danger">{{ $messages }}</p>
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group" >
                         <label for="exampleInputEmail1">Image</label>
                         <input type="file" name="images" id="images" class="form-control" placeholder="Name's product">
-                        @error('price')
-                            <p class="text-danger">{{ $messages }}</p>
+                        @error('images')
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -53,25 +53,25 @@
                     <br>
                 </div>
                 <div class="col-lg-6">
-                    <div class="form-group" >
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Price</label>
-                        <input type="text" name="price" class="form-control" placeholder="Name's product">
+                        <input type="text" name="price" class="form-control" placeholder="Price">
                         @error('price')
-                            <p class="text-danger">{{ $messages }}</p>
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group" >
                         <label for="exampleInputEmail1">Sale</label>
                         <input type="text" name="sale_price" class="form-control" value="0" placeholder="Name's product">
                         @error('sale_price')
-                            <p class="text-danger">{{ $messages }}</p>
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group" >
                         <label for="exampleInputEmail1">Quantity</label>
                         <input type="number" name="quatity" value="{{old('quatity')}}" class="form-control" placeholder="Name's product">
-                        @error('quatity')
-                            <p class="text-danger">{{ $messages }}</p>
+                        @error('quantity')
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -85,7 +85,7 @@
                         <label for="" style="padding-top: 10px">Status</label>
                         <br>
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="color" id="" value=" {{ 1 ?? old('status')}} checked" checked>
+                            <input type="radio" class="form-check-input" name="color" id="" value=" " checked>
                             Pink
                         </label>
                         <label class="form-check-label">

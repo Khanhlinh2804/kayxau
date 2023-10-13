@@ -2,14 +2,27 @@
 @section('title','Category Create')
 @section('linh')
     <div class="container">
-        <form action="{{route('category.update', $category->id)}}" method="post"  role="form">
+        <form action="{{route('category.update', $category->id)}}" method="post" enctype="multipart/form-data"  role="form">
             @csrf
             @method('put')
             <div class="form-group" style="padding-top: 10px">
                 <label for="exampleInputEmail1">Name</label>
                 <input type="text" name="name" value="{{$category->name}}" class="form-control" placeholder="Name's Category">
                 @error('name')
-                    <p class="text-danger">{{ $messages }}</p>
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form-group" >
+                <label for="exampleInputEmail1">Image</label>
+                <br>
+                <input type="file" name="image"  value="{{old('image') ?? $category->image}}" >
+                <div class="pt-3">
+                    <span>
+                        <img src="/uploads/{{$category->image}}" alt="" style="width: 150px; height: 200px;">
+                    </span>
+                </div>
+                @error('image')
+                    <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
             <h1></h1>

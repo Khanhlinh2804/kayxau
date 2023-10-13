@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\softDeletes;
 class Category extends Model
 {
     use HasFactory, softDeletes;
-    protected $fillable = ['name','status'];
+    protected $fillable = ['name','status','image'];
 
     public function scopeSearch($query) {
         if($key = request()->key){
