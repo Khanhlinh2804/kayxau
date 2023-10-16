@@ -63,13 +63,20 @@
                 </div>
             </div>
             {{-- kieemr tra xem ddawng nhaap chuwa mowis cho comment --}}
+            @if (session('success'))
+                <div style="color: brown">
+                    <strong>
+                        {{ session('success') }}
+                    </strong>
+                </div>           
+            @endif
             <div class="pb-5">
                 <h2>Add comment</h2>
-                <form action="" method="post">
+                <form action="{{route('comment')}}" method="post">
                     @csrf
                     <div class="form-group contact" >
-                        <input type="text" name="comment" class="form-control" placeholder="Comment">
-                        @error('comment')
+                        <input type="text" name="content" class="form-control" placeholder="Comment">
+                        @error('content')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>

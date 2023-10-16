@@ -34,16 +34,21 @@
             </form>
             <i class="fas fa-search"></i>
         </div>
-        <div class="pl-5 pt-3">
-            <p>|</p>
+        <div class="pl-5">
+          <div class="vr"></div>
         </div>
-        <a href="" class="pl-5">
+        <a href="{{route('login-signup')}}" class="pl-5">
             <i class="fas fa-user icon "></i>
         </a>
         
-        <a href="" class="pl-5">
-            <i class="fas fa-shopping-bag icon"></i>
-        </a>
+        <div class="pl-5 position-relative">
+            <a href="{{route('cart')}}" class="">
+              <i class="fas fa-shopping-bag icon"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                99+
+              </span>
+          </a>
+        </div>
 
       </div>
 

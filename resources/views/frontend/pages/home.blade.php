@@ -104,7 +104,7 @@
                         <a href="" class="">
                             <p class=" "> name</p>
                         </a>
-                        <h5 > 100 $</h5>
+                        <h5 class="text-start" > 100 $</h5>
                     </div>
                 </div>
         </div>

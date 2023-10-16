@@ -70,6 +70,11 @@ class ProductController extends Controller
         
     }
 
+    public function detail()
+    {
+        return view('frontend.pages.detail-product');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

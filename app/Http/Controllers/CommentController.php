@@ -35,9 +35,13 @@ class CommentController extends Controller
         Comment::create($request->all());
         return redirect()->route('comment.index')->with('success','Add Comment Successful');
     }
-    public function comment()
+    public function comment(Request $request)
     {
-
+        $request->validate([
+            'name'=>'required'
+        ]);
+        Comment::create($request->all());
+        return redirect()->route('comment')->with('success','Add Comment Successful');
     }
 
     /**

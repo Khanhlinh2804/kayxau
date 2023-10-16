@@ -159,6 +159,11 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'User not found.');
         }
     }
+
+    public function login()
+    {
+        return view('frontend.pages.login-signup');
+    }
     
 
 }
