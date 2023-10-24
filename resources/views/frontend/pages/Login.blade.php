@@ -3,13 +3,25 @@
 @section('content')
 <div class="shop-img">
     <img src="{{url('')}}/assets/imgs/9.png" alt="">
-    <p>Login / Register</p>
+    <p>Login</p>
 </div>
 <div class="container">
     <div class="row pt-5 pb-5">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-4">
-            <form action="" method="post">
+        @if (session('success'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong> {{ session('success') }}</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>  
+            @elseif(session('error'))       
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong> {{ session('error') }}</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>  
+        @endif
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <form action="{{route('signin')}}" method="post">
+                @csrf
                 <div>
                     <h2 class="text-center">Login</h2>
                     <p class="text-center">
@@ -32,7 +44,10 @@
                     <button type="submit" class="contact-submit">Login</button>
                 </div>
             </form>
-            <div class="pt-3"></div>
+            <div class="pt-2">
+                <a href="{{route('signup')}}" class="link-offset-2 link-underline link-underline-opacity-0">Do you have an account ?</a>
+            </div>
+            <div class="pt-2"></div>
             <div class="row pt-4">
                 <div class="col-lg-5">
                     <hr>
@@ -51,7 +66,7 @@
                     <div class="col-lg-3"></div>
                     <div class="col-lg-6 ">
                         <div class="d-flex">
-                            <div class="mt-2">
+                            <div class="mt-2 ml-3">
                                 <i class="fab fa-google" ></i>
                             </div>
                             <p class="p-2">Continue with Google</p>
@@ -76,51 +91,8 @@
                 </div>
             </button>
         </div>
-        <div class="col-lg-1">
+        <div class="col-lg-3">
         </div>
-        <div class="vr"></div>
-        <div class="col-lg-1"></div>
-        <div class="col-lg-4">
-            <div>
-                <form action="" method="post">
-                    <h2 class="text-center">Login</h2>
-                    <p class="text-center">
-                        Create an account for easier shopping, faster payments, and effortless order tracking
-                    </p>
-                    <div class="form-group contact" >
-                        <input type="text" name="name" class="form-control" placeholder="Name">
-                        @error('name')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="form-group contact" >
-                        <input type="email" name="email" class="form-control" placeholder="Email">
-                        @error('email')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="form-group contact" >
-                        <input type="text" name="phone" class="form-control" placeholder="Phone">
-                        @error('phone')
-                        <p class="text-danger">{{ $messages }}</p>
-                        @enderror
-                    </div>
-                    <div class="form-group contact" >
-                        <input type="password" name="password" class="form-control" placeholder="password">
-                        @error('phone')
-                        <p class="text-danger">{{ $messages }}</p>
-                        @enderror
-                    </div>
-                    <div class="pt-4">
-                        <button type="submit" class="contact-submit">Register</button>
-                    </div>
-                </form>
-                <div class="pt-4">
-                    <p class="text-center">By clicking 'Sign up,' you agree to our Terms of Service and Privacy Policy</p>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 @endsection

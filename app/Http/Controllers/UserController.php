@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+// use Auth;
 
 class UserController extends Controller
 {
@@ -162,7 +164,44 @@ class UserController extends Controller
 
     public function login()
     {
-        return view('frontend.pages.login-signup');
+
+        return view('frontend.pages.login');
+    }
+
+
+    public function signin(Request $request)
+    {
+        $user = request()->only(['email', 'password']);
+        $token = Auth::attempt($user);
+        if ($token) {
+            return back()->with('success','Login successfully');
+        } else {
+            return back()->with('error', 'Invalid credentials');
+        }
+    }
+    public function signup(){
+        return view('frontend.pages.register');
+    }
+    public function register(Request $request)
+    {
+        $user = new User();
+        
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password =Hash::make($request->password);
+        
+        $user->save();
+        return redirect()->route('login')->with('success','Register successfully');
+    }
+    public function logout()
+    {
+        $logout = Auth::logout();
+        if($logout){
+            return redirect()->route('home')->with('success', 'logout success');
+        }else{
+            return redirect()->back();
+        }
     }
     
 

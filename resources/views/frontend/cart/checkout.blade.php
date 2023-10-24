@@ -26,20 +26,28 @@
             <h2 class="text-capitalize">Order</h2>
         </div>
     </div>
-    <form action="" method="post">
+    <form action="{{route('cart.store')}}" method="post">
+        @csrf
         <div class="row pb-5">
             <div class="col-lg-7">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group contact">
-                            <input type="text" name="firstname" class="form-control" placeholder="FirstName">
+                            <input type="text" name="name" class="form-control" placeholder="FirstName">
                             @error('firstname')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group contact">
+                            <input hidden type="text" name="user_id" value="{{Auth::user()->id}}" class="form-control" >
+                            @error('user_id')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group contact">
+                            {{-- <input type="text" class="checkout-input" hidden value="{{ Auth::user()->name}}" > --}}
                             <input type="text" name="lastname" class="form-control" placeholder="LasttName">
                             @error('lastname')
                             <p class="text-danger">{{ $message}}</p>
@@ -48,21 +56,37 @@
                     </div>
                 </div>
                 <div class="contact">
-                    <select class="form-select border-top-0 border-start-0 border-end-0 "
-                        aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
+                    <select class="form-select border-top-0 border-start-0 border-end-0" 
+                    name="city" id="city" required>
+                        <option value="" selected disabled>Select a city</option>
+                        @foreach ($city as $data)
+                            <option value="{{ $data->id }}" {{ old('city') == $data->id ? 'selected' : '' }}>{{ $data->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="contact">
-                    <select class="form-select border-top-0 border-start-0 border-end-0"
-                        aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
+                    <select class="form-select border-top-0 border-start-0 border-end-0" name="districts" required>
+                        <option value="" selected disabled>Select a district</option>
+                        @foreach ($district as $data)
+                            <option value="{{ $data->id }}" {{ old('districts') == $data->id ? 'selected' : '' }}>{{ $data->name }}</option>
+                        @endforeach
                     </select>
                 </div>
+
+
+                {{-- <div class="contact">
+                    <select class="form-select border-top-0 border-start-0 border-end-0 "
+                         name="districts" id="districts">
+                    </select>
+                </div> --}}
                 <div class="form-group contact">
                     <input type="text" name="address" class="form-control" placeholder="Street">
+                    @error('address')
+                    <p class="text-danger">{{ $message}}</p>
+                    @enderror
+                </div>
+                <div class="form-group contact">
+                    <input type="email" name="email" value="{{Auth::user()->email}}" class="form-control" placeholder="Street">
                     @error('address')
                     <p class="text-danger">{{ $message}}</p>
                     @enderror
@@ -80,7 +104,7 @@
                 </div>
                 <div class="form-group">
                     <div class="mb-3 pt-3 contacts">
-                        <textarea class="form-control" rows="5" name="note" placeholder="Message"></textarea>
+                        <textarea class="form-control"  rows="5" name="note" placeholder="Message"></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -92,45 +116,49 @@
             </div>
             <div class="col-lg-4 ">
                 <div class="pt-5">
-                    <h4>Shipping information</h4>
+                    <h4>Order item product</h4>
                 </div>
                 <table class="table">
                     <tbody>
+                        @php
+                        $total = 0
+                    @endphp
+                    @php
+                        $quatity = 0
+                    @endphp
+                    @if (session('cart')) 
+                        @foreach (session('cart') as $id=>$item)
+                           @php
+                                $total += $item['price'] * $item['quatity']
+                            @endphp  
+                            @php
+                                $quatity += $item['quatity']
+                            @endphp  
                         <tr>
                             <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" value="" name="shipping">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Ship COD
-                                    </label>
-                                </div>
+                                <img src="{{url('uploads')}}/{{$item['images']}}" alt="" width="100px" height="100px" srcset="">
                             </td>
-                            <td style="color: rgb(229, 4, 4);">5 $</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" value="" name="shipping">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        Ship Now (in Ha Noi)
-                                    </label>
-                                </div>
+                            <td >
+                                <p style="color: rgb(229, 4, 4);">$ {{$item['price']}}</p>
+                                <p > Quantity: {{$item['quatity']}}</p>
                             </td>
-                            <td style="color: rgb(229, 4, 4);">10$ </td>
                         </tr>
+                        
+                        @endforeach  
+                    @endif
                     </tbody>
                 </table>
                 <div class="pt-5">
                     <h4>Shipping information</h4>
                 </div>
                 <div class="form-check pt-3">
-                    <input class="form-check-input" type="radio" value="" name="shipping">
+                    <input class="form-check-input" type="radio" value="cod" name="payment">
                     <label class="form-check-label">
                         Payment on delivery
                     </label>
                 </div>
                 <div class="form-check ">
-                    <input class="form-check-input" type="radio" value="" name="shipping">
+                    <input class="form-check-input" type="radio" value="vnpay" name="payment">
                     <label class="form-check-label" for="flexCheckChecked">
                         Vn Pay
                     </label>
@@ -143,20 +171,13 @@
                     <tbody>
                         <tr>
                             <td>Total Price</td>
-                            <td style="color: rgb(229, 4, 4);">Otto $</td>
+                            <td style="color: rgb(229, 4, 4);">$ {{$total}} </td>
                         </tr>
                         <tr>
                             <td>Total Quantity</td>
-                            <td style="color: rgb(229, 4, 4);">Otto </td>
+                            <td style="color: rgb(229, 4, 4);">Item: {{$quatity}} </td>
                         </tr>
-                        <tr>
-                            <td>Transportation costs</td>
-                            <td style="color: rgb(229, 4, 4);">Otto $</td>
-                        </tr>
-                        <tr>
-                            <th>Total</th>
-                            <td style="color: rgb(229, 4, 4);">Otto $</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
                 <div class="row">
@@ -170,4 +191,27 @@
     @include('frontend.layout.shipment')
 </div>
 </div>
+@endsection
+@section('js')
+    <script type="text/javascript" >
+        $(document).ready(function() {
+            $('#city').change(function(event){
+                var idCity = this.value;
+                $('#district').html('');
+
+                $.ajax({
+                    url: "/cart/district",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {city_id: idCity, _token: "{{ csrf_token() }}"},
+                    success: function(response){
+                        $('#districts').html('<option value="">Select State</option>');
+                            $.each(response.districts,function(index, val){
+                            $('#districts').append('<option value=" '+val.id+' "> '+val.name+' </option>')
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

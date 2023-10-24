@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product =  Product::with('category')->orderByDesc('name','desc')->search()->paginate(10);
+        $product =  Product::with('category')->orderByDesc('name','desc')->search()->paginate(5);
         return view('backend.product.list', compact('product'));
     }
 
@@ -70,9 +70,11 @@ class ProductController extends Controller
         
     }
 
-    public function detail()
+    public function detail($id)
     {
-        return view('frontend.pages.detail-product');
+        $random = Product::inRandomOrder()->limit(4)->get();
+        $product = Product::with('category')->find($id);
+        return view('frontend.pages.detail-product', compact('product','random'));
     }
 
     /**

@@ -1,7 +1,7 @@
 .box {
     position: relative;
+    padding-left: 30px;
 }
-
 body{
     font-family: Comic Sans MS;
 }
@@ -19,10 +19,10 @@ body{
     transition: .5s;
 }
 .nav-item{
-    padding-left: 15px;
+    padding-left: 20px;
 }
 .box:hover input {
-    width: 200px;
+    width: 300px;
     background: #ffffff;
     border-radius: 10px;
 }
@@ -258,6 +258,7 @@ figure figcaption {
 }
 .Mountains{
     width: 100%;
+    height: 350px;
 }
 figure:hover figcaption {
     --_i: 0%;
@@ -375,9 +376,10 @@ figure:hover img {
     float: right;
     
 }
+
 .shop-select select{
     height: 50px;
-    width: 250px;
+    width: 200px;
 }
 .shop-ul-li li {
     list-style: none;
@@ -549,5 +551,13 @@ figure:hover img {
 }
 /* ------checkout-------  */
 
-
-
+/* cart mini  */
+.cart-mini{
+    padding-left: 20%;
+}
+.cart-mini a{
+    border: 1px #036f12 solid;
+}
+.cart-quatity input{
+    width: 50px;
+}

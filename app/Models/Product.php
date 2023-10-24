@@ -14,6 +14,7 @@ class Product extends Model
     public function category(){
         return $this->hasOne(Category::class,'id', 'category_id');
     }
+
     public function scopeSearch($query) {
         if($key = request()->key){
             $query = $query->where('name', 'like', '%'.$key.'%');

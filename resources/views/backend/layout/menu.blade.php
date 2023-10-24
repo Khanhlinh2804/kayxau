@@ -77,11 +77,11 @@
                     </li>
     
                     <li>
-                        <a href="#">
+                        <a href="{{route('order.index')}}">
                             <span class="icon" >
                                 <ion-icon name="help-outline"></ion-icon>
                             </span>
-                            <span class="title">Help</span>
+                            <span class="title">Order</span>
                         </a>
                     </li>
     

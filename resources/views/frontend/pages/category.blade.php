@@ -22,23 +22,14 @@
         @endif
     {{-- ------- search -------- --}}
     <div class="row pt-5">
-        <div class="col-lg-4"></div>
-        <div class="col-lg-4">
-            <form action="" name="sortProducts" id="sortProducts"  >
-                <input type="hidden" name="url" value="">
-                {{-- @csrf --}}
-                <div class="shop-select d-flex" >
-                    <select name="sort" id="sort">
-                        <option > Default Sorting </option>
-                        <option value="low_high"> Price: Low to high </option>
-                        <option value="high_low">  Pirce: High to Low </option>
-                        <option value="newness"> Sort by Newness </option>
-                    </select>
-                    <button type="submit"  class="btn-primary">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </form>
+        <div class="col-lg-8">
+            <div class="shop-select">
+                <select>
+                    <option value="1">Americano</option>
+                    <option value="2">Latte</option>
+                    <option value="3">Green Tea</option>
+                </select>
+            </div>
         </div>
         <div class="col-lg-4">
             <form>
@@ -104,7 +95,7 @@
         <div class="col-lg-9">
             <div class="row">
                 <p>Have {{$total_product}} product </p>
-                @foreach ($product as $item)
+                @foreach ($products as $item)
                 <div class="col-lg-4 pt-5 pb-3">
                     <div class="btn" style="">
                         <a href="{{route('product.detail',['id'=>$item->id])}}">
@@ -133,7 +124,7 @@
                 </div>
                 @endforeach
             </div>
-            {{$product->appends(request()->all())->links() }}
+            {{$products->appends(request()->all())->links() }}
         </div>
 
         @include('frontend.layout.shipment');

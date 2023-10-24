@@ -70,7 +70,7 @@
                     growing plants easy. So we offer new ways to infuse this restorative beauty into 
                     as many daily rituals as possible, through bio-preferred design to increase Connect with the natural world
                     </p>
-                <a href="#">
+                <a href="{{route('about')}}">
                     <h5>
                         <i class="fas fa-angle-double-right"></i>
                     </h5>
@@ -82,66 +82,76 @@
     <div class="row">
         <h1>Category</h1>
         <hr>
+        @foreach ($category as $item)
         <div class="col-lg-3 ">
-            <figure>
-                <img src="https://picsum.photos/id/287/250/300" class="Mountains" alt="Mountains">
-                <figcaption>The Day</figcaption>
-            </figure>
+            <a href="{{route('shop')}}">
+                <figure>
+                    <img src="{{url('uploads')}}/{{$item->image}}" class="Mountains" alt="Mountains">
+                    <figcaption>{{$item->name}}</figcaption>
+                </figure>
+            </a>
         </div>
+        @endforeach
     </div>
 
     {{-- -------outstanding product--------  --}}
     <div class="row pt-5">
         <h1>Outstanding Product</h1>
         <hr>
-        <div class="col-lg-3 pt-5">
+        @foreach ($product as $item)   
+            <div class="col-lg-3 pt-5">
                 <div class="btn" style="">
-                    <a href="">
-                        <img src="https://picsum.photos/id/287/250/300"
-                            class="card-img-top img-product" alt="...">
+                    <a href="{{route('product.detail',['id'=>$item->id])}}">
+                        <img src="{{url('uploads')}}/{{$item->images}}"
+                        class="card-img-top img-product" alt="..." width="100%" height="400px">
                     </a>
                     <div class="card-body">
                         <a href="" class="">
-                            <p class=" "> name</p>
+                            <p class=" ">{{$item->name}}</p>
+                            <del>{{$item->sale_price}}$</del>
                         </a>
-                        <h5 class="text-start" > 100 $</h5>
+                        <h5 class="text-start" > {{$item->price}} $</h5>
                     </div>
                 </div>
-        </div>
+            </div>
+        @endforeach
     </div>
 
     {{-- ----------Outstanding Blog----------  --}}
     <div class="row pt-5 pb-5">
         <h1>Outstanding Blogs</h1>
         <hr>
-        <div class="col-lg-6 home-blog">
-            <div class="text-home">
-                <h2>01</h2>
-                <h5>Name</h5>
-                <div class="home-right d-flex">
-                    <p>Date</p>
-                    <a href="">
-                        <i class="fas fa-chevron-right" style="color: #949492"></i>
-                    </a>
+        @foreach ($blog as $item)
+            <div class="col-lg-6 home-blog">
+                <div class="text-home">
+                    <h2>{{$item->id}}</h2>
+                    <h5>{{$item->name}}</h5>
+                    <div class="home-right d-flex">
+                        <p>{{$item->created_at}}</p>
+                        <a href="{{route('blog_detail',['id'=>$item->id])}}">
+                            <i class="fas fa-chevron-right" style="color: #949492"></i>
+                        </a>
+                    </div>
+                    <img src="{{url('uploads')}}/{{$item->image}}" alt="" srcset="">
                 </div>
-                <img src="{{url('')}}/assets/imgs/1.png" alt="" srcset="">
-            </div>
 
-        </div>
+            </div>
+        @endforeach
+        @foreach ($blogs as $item)
         <div class="col-lg-6 home-blog">
             <div class="text-home ">
-                <img src="{{url('')}}/assets/imgs/1.png" alt="" srcset="">
-                <h2>01</h2>
-                <h5>Name</h5>
+                <img src="{{url('uploads')}}/{{$item->image}}" alt="" srcset="">
+                <h2>{{$item->id}}</h2>
+                <h5>{{$item->name}}</h5>
                 <div class="home-left d-flex">
-                    <p>Date</p>
+                    <p>{{$item->created_at}}</p>
                     <a href="" class="hihi-home">
                         <i class="fas fa-chevron-right" style="color: #949492"></i>
                     </a>
                 </div>
             </div>
-
-        </div>
+        </div>    
+        @endforeach
     </div>
     	
 

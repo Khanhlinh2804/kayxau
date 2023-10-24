@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container ">
+    
     <a class="navbar-brand" href="{{route('home')}}">
     <img src="{{url('')}}/assets/imgs/logo.jpg" alt="" srcset="">    
     </a>
@@ -11,9 +12,9 @@
         <li class="nav-item">
           <a class="nav-link " href="{{route('home')}}">HOME</a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link" href="#">SEVICE</a>
-        </li>
+        </li> --}}
         <li class="nav-item">
           <a class="nav-link" href="{{route('shop')}}">SHOP</a>
         </li>
@@ -28,6 +29,80 @@
         </li>
       </ul>
       
+      {{-- <div class="btn-group dropstart">
+        <button type="button" style="border: none" class=" dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-shopping-bag icon"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <!-- Dropdown menu links -->
+        </ul>
+      </div> --}}
+      
+      <div class="btn-group dropstar" >
+        <button class="btn dropdown-toggle" type="button"  data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-shopping-bag icon"></i>
+        </button>
+        @php
+            $total = 0
+        @endphp
+        @foreach ((array)session('cart') as $id => $item)
+            @php
+                $total += $item['price'] * $item['quatity']
+            @endphp
+
+        @endforeach
+
+        <ul class="dropdown-menu " style="width: 300px">
+          <li>
+            <div class='minicart--item-container'>
+                You have
+                <span class='minicart--item-count' > <span class="fw-bold">{{count((array) session('cart'))}}</span> items</span>
+                in your cart!
+              </div>  
+            </li>
+          <hr>
+          <li>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if (session('cart'))
+                  @foreach (session('cart') as $id => $item)
+                  <tr>
+                    <td scope="row">
+                      <img src="{{url('uploads')}}/{{$item['images']}}" alt="" width="100px" height="100px">
+                    </td>
+                    <td>
+                      <h6>
+                        {{$item['name']}}
+                      </h6>
+                      <p>
+                        <span style="color: brown">$</span>{{$item['price']}} 
+                      </p>
+                      <p>
+                        Quantity: {{$item['quatity']}}
+                      </p>
+
+                    </td>
+                  </tr>
+                  @endforeach
+                @endif
+              </tbody>
+            </table>
+          </li>
+              
+          <li>Total Price: {{$total}} </li>
+          <li>
+            <div class="btn btn-ouline-primary cart-mini">
+              <a class="dropdown-item " href="{{route('cart')}}">View Cart</a>
+            </div>
+          </li>
+        </ul>
+      </div>
         <div class="box">
             <form name="search">
                 <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
@@ -37,15 +112,31 @@
         <div class="pl-5">
           <div class="vr"></div>
         </div>
-        <a href="{{route('login-signup')}}" class="pl-5">
-            <i class="fas fa-user icon "></i>
-        </a>
+        @if (Auth::check())
+            <div class="btn-group">
+            <button class="btn btn-secondary dropdown-toggle" style="color: rgb(42, 42, 42); background-color: white; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{Auth::user()->name}}
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li>
+                <a href="{{ route('user.logout') }}">
+                        <i class="fa fa-fw fa-power-off"></i>Log Out
+                    </a>
+            </ul>
+          </div>
+        @else
+          <a href="{{route('login')}}" class="pl-5">
+              <i class="fas fa-user icon "></i>
+          </a>
+        @endif
+
         
         <div class="pl-5 position-relative">
             <a href="{{route('cart')}}" class="">
               <i class="fas fa-shopping-bag icon"></i>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                99+
+                {{count((array) session('cart'))}}
               </span>
           </a>
         </div>
